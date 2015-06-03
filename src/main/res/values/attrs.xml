@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TabBarView">
+        <attr name="titleColor" format="color" />
+        <attr name="titleSelectedColor" format="color" />
+        <attr name="titleSize" format="dimension" />
+        <attr name="iconSize" format="dimension" />
+        <attr name="animate" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TableView">
+
+    </declare-styleable>
+
+    <declare-styleable name="NavBarView">
+        <attr name="navTitle" format="string" />
+        <attr name="navTitleColor" format="color" />
+        <attr name="navTitleSize" format="dimension" />
+        <attr name="navPressColor" format="color" />
+        <attr name="navItemMargin" format="dimension" />
+        <attr name="navRightIcon" format="reference" />
+        <attr name="navLeftIcon" format="reference" />
+        <attr name="navRightText" format="string" />
+        <attr name="navLeftText" format="string" />
+        <attr name="navItemBackground" format="reference" />
+        <attr name="navItemTextSize" format="dimension" />
+        <attr name="navHasBackTitle" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SearchBarView">
+        <attr name="searchWrapperBackground" format="reference" />
+        <attr name="searchLeftIcon" format="reference" />
+        <attr name="searchEditMargin" format="dimension" />
+        <attr name="searchEditInnerMargin" format="dimension" />
+        <attr name="searchHintColor" format="color" />
+        <attr name="searchHintText" format="string" />
+        <attr name="searchTextColor" format="color" />
+        <attr name="searchTextSize" format="dimension" />
+    </declare-styleable>
+
+</resources>

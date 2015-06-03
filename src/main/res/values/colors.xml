@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="navBar">#33BBEE</color>
+    <color name="navBarPressed">#22AADD</color>
+    <color name="actionSheetAction">#FF007AFF</color>
+    <color name="actionSheetDivider">#BBDEDEDE</color>
+    <color name="actionSheetTitle">#FFABABAB</color>
+    <color name="label_color">#454545</color>
+    <color name="content_color">#787878</color>
+    <color name="dark_label_color">#EFEFEF</color>
+</resources>
