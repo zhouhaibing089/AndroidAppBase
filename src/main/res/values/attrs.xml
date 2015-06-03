@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="TabBarView">
+    <declare-styleable name="AppBaseTabBarView">
         <attr name="titleColor" format="color" />
         <attr name="titleSelectedColor" format="color" />
         <attr name="titleSize" format="dimension" />
@@ -13,7 +13,7 @@
 
     </declare-styleable>
 
-    <declare-styleable name="NavBarView">
+    <declare-styleable name="AppBaseNavBarView">
         <attr name="navTitle" format="string" />
         <attr name="navTitleColor" format="color" />
         <attr name="navTitleSize" format="dimension" />

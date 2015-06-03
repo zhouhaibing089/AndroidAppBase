@@ -71,18 +71,18 @@ public class TabBarView extends LinearLayout implements ViewPager.OnPageChangeLi
 
     private void init(AttributeSet attrs) {
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.TabBarView);
+                attrs, R.styleable.AppBaseTabBarView);
 
         /* 获取属性配置 */
         Resources r = getResources();
-        mTitleColor = a.getColor(R.styleable.TabBarView_titleColor, DEFAULT_TITLE_COLOR);
-        mTitleSelectedColor = a.getColor(R.styleable.TabBarView_titleSelectedColor,
+        mTitleColor = a.getColor(R.styleable.AppBaseTabBarView_titleColor, DEFAULT_TITLE_COLOR);
+        mTitleSelectedColor = a.getColor(R.styleable.AppBaseTabBarView_titleSelectedColor,
                 DEFAULT_TITLE_SELECTED_COLOR);
-        mTitleSize = a.getDimension(R.styleable.TabBarView_titleSize,
+        mTitleSize = a.getDimension(R.styleable.AppBaseTabBarView_titleSize,
                 AppUtils.getPix(getContext(), DEFAULT_TITLE_SIZE));
-        mIconSize = a.getDimension(R.styleable.TabBarView_iconSize,
+        mIconSize = a.getDimension(R.styleable.AppBaseTabBarView_iconSize,
                 AppUtils.getPix(getContext(), DEFAULT_ICON_SIZE));
-        mUseAnimation = a.getBoolean(R.styleable.TabBarView_animate, DEFAULT_USE_ANIMATION);
+        mUseAnimation = a.getBoolean(R.styleable.AppBaseTabBarView_animate, DEFAULT_USE_ANIMATION);
 
         a.recycle();
 

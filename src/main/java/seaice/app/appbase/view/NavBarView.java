@@ -80,23 +80,23 @@ public class NavBarView extends RelativeLayout {
 
     private void init(AttributeSet attrs, int defStyle) {
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.NavBarView, defStyle, 0);
+                attrs, R.styleable.AppBaseNavBarView, defStyle, 0);
 
-        mTitle = a.getString(R.styleable.NavBarView_navTitle);
-        mRightIcon = a.getResourceId(R.styleable.NavBarView_navRightIcon, DEFAULT_RIGHT_ICON);
-        mLeftIcon = a.getResourceId(R.styleable.NavBarView_navLeftIcon, DEFAULT_LEFT_ICON);
-        mRightText = a.getString(R.styleable.NavBarView_navRightText);
-        mLeftText = a.getString(R.styleable.NavBarView_navLeftText);
-        mTitleColor = a.getColor(R.styleable.NavBarView_navTitleColor, DEFAULT_TITLE_COLOR);
-        mTitleSize = a.getDimension(R.styleable.NavBarView_navTitleSize,
+        mTitle = a.getString(R.styleable.AppBaseNavBarView_navTitle);
+        mRightIcon = a.getResourceId(R.styleable.AppBaseNavBarView_navRightIcon, DEFAULT_RIGHT_ICON);
+        mLeftIcon = a.getResourceId(R.styleable.AppBaseNavBarView_navLeftIcon, DEFAULT_LEFT_ICON);
+        mRightText = a.getString(R.styleable.AppBaseNavBarView_navRightText);
+        mLeftText = a.getString(R.styleable.AppBaseNavBarView_navLeftText);
+        mTitleColor = a.getColor(R.styleable.AppBaseNavBarView_navTitleColor, DEFAULT_TITLE_COLOR);
+        mTitleSize = a.getDimension(R.styleable.AppBaseNavBarView_navTitleSize,
                 AppUtils.getPix(getContext(), DEFAULT_TITLE_SIZE));
-        mItemMargin = a.getDimension(R.styleable.NavBarView_navItemMargin,
+        mItemMargin = a.getDimension(R.styleable.AppBaseNavBarView_navItemMargin,
                 AppUtils.getPix(getContext(), DEFAULT_ITEM_MARGIN));
-        mItemBackground = a.getResourceId(R.styleable.NavBarView_navItemBackground,
+        mItemBackground = a.getResourceId(R.styleable.AppBaseNavBarView_navItemBackground,
                 DEFAULT_ITEM_BACKGROUND);
-        mItemTextSize = a.getDimension(R.styleable.NavBarView_navItemTextSize,
+        mItemTextSize = a.getDimension(R.styleable.AppBaseNavBarView_navItemTextSize,
                 AppUtils.getPix(getContext(), DEFAULT_ITEM_TEXT_SIZE));
-        mHasBackTitle = a.getBoolean(R.styleable.NavBarView_navHasBackTitle, DEFAULT_HAS_BACK_TITLE);
+        mHasBackTitle = a.getBoolean(R.styleable.AppBaseNavBarView_navHasBackTitle, DEFAULT_HAS_BACK_TITLE);
 
         a.recycle();
 
