@@ -1,10 +1,8 @@
 package seaice.app.appbase.view;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -14,15 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.larvalabs.svgandroid.SVG;
-import com.larvalabs.svgandroid.SVGParser;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import seaice.app.appbase.R;
 import seaice.app.appbase.utils.AppUtils;
-import seaice.app.appbase.utils.ColorUtils;
 
 /**
  * 仿iOS中TabBar样式的View.
@@ -31,21 +25,13 @@ import seaice.app.appbase.utils.ColorUtils;
  */
 public class TabBarView extends LinearLayout implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
-    private static final int DEFAULT_TITLE_COLOR = Color.parseColor("#FF6E6E6E");
-    private static final int DEFAULT_TITLE_SELECTED_COLOR = Color.parseColor("#FF33BBEE");
     private static final float DEFAULT_TITLE_SIZE = 0;
     private static final int DEFAULT_ICON_SIZE = 28;
-    private static final boolean DEFAULT_USE_ANIMATION = true;
-    /* 标题颜色 */
-    int mTitleColor;
-    /* 标题被选中时的颜色 */
-    int mTitleSelectedColor;
+
     /* 标题的大小 */
     float mTitleSize;
     /* 图标的大小 */
     float mIconSize;
-    /* 是否使用动画 */
-    boolean mUseAnimation;
     /* 表示当前显示的是第几个tab, -1表示不可用 */
     private int mTabIndex = -1;
     /* 模型数据 */
@@ -74,21 +60,14 @@ public class TabBarView extends LinearLayout implements ViewPager.OnPageChangeLi
                 attrs, R.styleable.AppBaseTabBarView);
 
         /* 获取属性配置 */
-        Resources r = getResources();
-        mTitleColor = a.getColor(R.styleable.AppBaseTabBarView_titleColor, DEFAULT_TITLE_COLOR);
-        mTitleSelectedColor = a.getColor(R.styleable.AppBaseTabBarView_titleSelectedColor,
-                DEFAULT_TITLE_SELECTED_COLOR);
         mTitleSize = a.getDimension(R.styleable.AppBaseTabBarView_titleSize,
                 AppUtils.getPix(getContext(), DEFAULT_TITLE_SIZE));
         mIconSize = a.getDimension(R.styleable.AppBaseTabBarView_iconSize,
                 AppUtils.getPix(getContext(), DEFAULT_ICON_SIZE));
-        mUseAnimation = a.getBoolean(R.styleable.AppBaseTabBarView_animate, DEFAULT_USE_ANIMATION);
 
         a.recycle();
-
         /* 横向排列 */
         setOrientation(HORIZONTAL);
-
         /* 其他属性初始化 */
         mTitleList = new ArrayList<>();
         mIconList = new ArrayList<>();
@@ -125,7 +104,7 @@ public class TabBarView extends LinearLayout implements ViewPager.OnPageChangeLi
             icon.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             icon.setMinimumWidth((int) mIconSize);
             icon.setMinimumHeight((int) mIconSize);
-            icon.setImageDrawable(getInterDrawable(i, 0));
+            icon.setImageDrawable(mAdapter.getIcon(i, 1));
             tab.addView(icon, getIconLayoutParams());
             mIconList.add(icon);
             TextView title = new TextView(getContext());
@@ -194,16 +173,16 @@ public class TabBarView extends LinearLayout implements ViewPager.OnPageChangeLi
 
     @Override
     public void onPageScrolled(int position, float offset, int positionOffsetPixels) {
-        if (offset == 0f || !mUseAnimation) {
+        if (offset == 0f) {
             changeTab(position);
             return;
         }
         /* 选中色到普通色 */
-        mTitleList.get(position).setTextColor(getInterColor(1 - offset));
-        mIconList.get(position).setImageDrawable(getInterDrawable(position, 1 - offset));
+        mTitleList.get(position).setTextColor(mAdapter.getTitleColor(offset));
+        mIconList.get(position).setImageDrawable(mAdapter.getIcon(position, offset));
         /* 普通色到选中色 */
-        mTitleList.get(position + 1).setTextColor(getInterColor(offset));
-        mIconList.get(position + 1).setImageDrawable(getInterDrawable(position + 1, offset));
+        mTitleList.get(position + 1).setTextColor(mAdapter.getTitleColor(1 - offset));
+        mIconList.get(position + 1).setImageDrawable(mAdapter.getIcon(position + 1, 1 - offset));
     }
 
     @Override
@@ -213,71 +192,6 @@ public class TabBarView extends LinearLayout implements ViewPager.OnPageChangeLi
 
     @Override
     public void onPageScrollStateChanged(int state) {
-    }
-
-    /**
-     * <p>
-     * 获取正常色和选中色的中间颜色.
-     * </p>
-     * <ol>
-     * <li>当ratio = 0时, 结果为正常色</li>
-     * <li>当ratio = 1时, 结果为选中色</li>
-     * </ol>
-     *
-     * @param ratio
-     * @return
-     */
-    protected int getInterColor(float ratio) {
-        return ColorUtils.getInterColor(mTitleColor, mTitleSelectedColor, ratio);
-    }
-
-    /**
-     * <p>
-     * 获取白色和选中色的中间颜色.
-     * </p>
-     * <ol>
-     * <li>当ratio = 0时, 结果为白色</li>
-     * <li>当ratio = 1时, 结果为选中色</li>
-     * </ol>
-     *
-     * @param ratio 中间比例
-     * @return 结果颜色
-     */
-    protected int getInterIconFillColor(float ratio) {
-        return ColorUtils.getInterColor(Color.WHITE, mTitleSelectedColor, ratio);
-    }
-
-    /**
-     * 获取标题颜色和选中颜色的中间颜色
-     *
-     * @param ratio 中间比例
-     * @return 结果颜色
-     */
-    protected int getInterIconStrokeColor(float ratio) {
-        return ColorUtils.getInterColor(mTitleColor, mTitleSelectedColor, ratio);
-    }
-
-    /**
-     * <p>
-     * 获取正常icon和选中icon的中间icon
-     * </p>
-     * <ol>
-     * <li>当ratio = 0时, 图片为正常icon</li>
-     * <li>当ratio = 1时, 图片为选中icon</li>
-     * </ol>
-     *
-     * @param position
-     * @param ratio
-     * @return
-     */
-    protected Drawable getInterDrawable(int position, float ratio) {
-        int interColor = getInterIconFillColor(ratio);
-        int svgResId = mAdapter.getIcon(position);
-        String svgResStr = AppUtils.getRawResAsString(getContext(), svgResId);
-        // 使用中间色替换原图中的颜色
-        SVG svg = SVGParser.getSVGFromResource(getResources(), svgResId, mTitleSelectedColor,
-                interColor);
-        return svg.createPictureDrawable();
     }
 
     /* 直接点击Tab跳转的动作 */
@@ -299,12 +213,12 @@ public class TabBarView extends LinearLayout implements ViewPager.OnPageChangeLi
         }
         // 范围检查
         if (mTabIndex >= 0 && mTabIndex < mAdapter.getCount()) {
-            mTitleList.get(mTabIndex).setTextColor(mTitleColor);
-            mIconList.get(mTabIndex).setImageDrawable(getInterDrawable(mTabIndex, 0));
+            mTitleList.get(mTabIndex).setTextColor(mAdapter.getTitleColor(1));
+            mIconList.get(mTabIndex).setImageDrawable(mAdapter.getIcon(mTabIndex, 1));
         }
         if (to >= 0 && to < mAdapter.getCount()) {
-            mTitleList.get(to).setTextColor(mTitleSelectedColor);
-            mIconList.get(to).setImageDrawable(getInterDrawable(to, 1));
+            mTitleList.get(to).setTextColor(mAdapter.getTitleColor(0));
+            mIconList.get(to).setImageDrawable(mAdapter.getIcon(to, 0));
             if (mListener != null) {
                 mListener.onTabChange(mTabIndex, to);
             }
