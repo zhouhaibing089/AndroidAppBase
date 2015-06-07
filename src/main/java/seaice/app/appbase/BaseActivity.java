@@ -2,12 +2,13 @@ package seaice.app.appbase;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 
 import butterknife.ButterKnife;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import seaice.app.appbase.view.NavBarView;
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends SwipeBackActivity {
 
     protected NavBarView mNavBarView;
 
@@ -16,13 +17,13 @@ public abstract class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
 
+        if (!needSwipeBack()) {
+            setSwipeBackEnable(false);
+        }
         if (hasNavBar()) {
             mNavBarView = (NavBarView) findViewById(R.id.app_base_nav_bar);
         }
-        // View的Injection
-        if (needButterKnife()) {
-            ButterKnife.inject(this);
-        }
+        ButterKnife.inject(this);
         // Member的Injection
         if (needDagger()) {
             BaseApplication.inject(this);
@@ -77,5 +78,16 @@ public abstract class BaseActivity extends FragmentActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            if (mNavBarView != null) {
+                mNavBarView.triggerMenu();
+            }
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 }

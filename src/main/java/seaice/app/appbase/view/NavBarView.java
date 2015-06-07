@@ -334,6 +334,19 @@ public class NavBarView extends RelativeLayout {
         });
     }
 
+    /**
+     * 处理菜单键的点击
+     */
+    public void triggerMenu() {
+        if (mPopupWindow != null) {
+            if (mPopupWindow.isShowing()) {
+                mPopupWindow.dismiss();
+            } else {
+                mPopupWindow.showAsDropDown(mRightItem);
+            }
+        }
+    }
+
     /* 初始一个PopupWindow */
     protected void initPopupWindow() {
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.popup_menu, null);
