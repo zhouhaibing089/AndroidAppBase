@@ -1,4 +1,5 @@
 <resources>
     <string name="cancel">Cancel</string>
     <string name="app_name">AppBase</string>
+    <string name="app_base_content_desc">AppBaseContentDescription</string>
 </resources>
