@@ -155,6 +155,7 @@ public abstract class TableAdapter extends BaseAdapter {
             /* 在当前Section行中 */
             int row = position - range.start - range.hasHeader;
             View rowView = getRow(section, row, convertView);
+            // 只有第一次创建时的View才设置背景
             if (rowView.getBackground() == null) {
                 // 最后一行
                 if ((row + 1) == getRowCount(section)) {
@@ -234,7 +235,7 @@ public abstract class TableAdapter extends BaseAdapter {
             range.end = mCount;
             mRangeMap.put(i, range);
         }
-            /* TableView的Footer */
+        /* TableView的Footer */
         mHasFooter = getFooter() == null ? 0 : 1;
         mCount += mHasFooter;
 
