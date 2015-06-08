@@ -156,13 +156,11 @@ public abstract class TableAdapter extends BaseAdapter {
             int row = position - range.start - range.hasHeader;
             View rowView = getRow(section, row, convertView);
             // 只有第一次创建时的View才设置背景
-            if (rowView.getBackground() == null) {
-                // 最后一行
-                if ((row + 1) == getRowCount(section)) {
-                    rowView.setBackgroundResource(R.drawable.tabcell_last_bg);
-                } else {
-                    rowView.setBackgroundResource(R.drawable.tabcell_bg);
-                }
+            // 最后一行
+            if ((row + 1) == getRowCount(section)) {
+                rowView.setBackgroundResource(R.drawable.tabcell_last_bg);
+            } else {
+                rowView.setBackgroundResource(R.drawable.tabcell_bg);
             }
             return rowView;
         }
