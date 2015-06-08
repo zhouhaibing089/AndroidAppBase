@@ -155,16 +155,68 @@ public abstract class TableAdapter extends BaseAdapter {
             /* 在当前Section行中 */
             int row = position - range.start - range.hasHeader;
             View rowView = getRow(section, row, convertView);
-            // 只有第一次创建时的View才设置背景
-            // 最后一行
-            if ((row + 1) == getRowCount(section)) {
-                rowView.setBackgroundResource(R.drawable.tabcell_last_bg);
+            // 设置背景
+            int rowCount = getRowCount(section);
+            int firstRowBg = getFirstRowBackgroundResource(section, row);
+            int rowBg = getRowBackgroundResource(section, row);
+            int lastRowBg = getLastRowBackgroundResource(section, row);
+            int singleRowBg = getSingleRowBackgroundResource(section, row);
+            if (rowCount == 1) {
+                if (singleRowBg != 0) {
+                    rowView.setBackgroundResource(singleRowBg);
+                }
+            } else if ((row + 1) == rowCount) {
+                if (lastRowBg != 0) {
+                    rowView.setBackgroundResource(lastRowBg);
+                }
+            } else if (row == 0) {
+                if (firstRowBg != 0) {
+                    rowView.setBackgroundResource(firstRowBg);
+                }
             } else {
-                rowView.setBackgroundResource(R.drawable.tabcell_bg);
+                if (rowBg != 0) {
+                    rowView.setBackgroundResource(rowBg);
+                }
             }
             return rowView;
         }
         return convertView;
+    }
+
+    /**
+     * 第一行的背景
+     *
+     * @return 背景资源ID
+     */
+    protected int getFirstRowBackgroundResource(int section, int row) {
+        return R.drawable.tabcell_bg;
+    }
+
+    /**
+     * 每一行的背景
+     *
+     * @return 背景资源ID
+     */
+    protected int getRowBackgroundResource(int section, int row) {
+        return R.drawable.tabcell_bg;
+    }
+
+    /**
+     * 最后一行的背景
+     *
+     * @return 背景资源ID
+     */
+    protected int getLastRowBackgroundResource(int section, int row) {
+        return R.drawable.tabcell_last_bg;
+    }
+
+    /**
+     * 只有一行时的背景
+     *
+     * @return 背景资源ID
+     */
+    protected int getSingleRowBackgroundResource(int section, int row) {
+        return R.drawable.tabcell_last_bg;
     }
 
     static final String SECTION_HEADER_TAG = "SECTION_HEADER";

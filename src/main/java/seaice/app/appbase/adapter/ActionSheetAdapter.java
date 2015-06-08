@@ -55,23 +55,35 @@ public class ActionSheetAdapter extends TableAdapter {
             return getDividerView();
         }
         /* ActionSheet的每一行Action */
-        View rowView = getActionView(mActions[row / 2],
+        return getActionView(mActions[row / 2],
                 mIcons == null ? -1 : mIcons[row / 2]);
-        int rowCount = getRowCount(section);
-        if (rowCount == 1) {
-            rowView.setBackgroundResource(mTitle == null ?
-                    R.drawable.action_sheet_single_bg
-                    : R.drawable.action_sheet_last_bg);
-        } else if (row == 0) {
-            rowView.setBackgroundResource(mTitle == null ?
-                    R.drawable.action_sheet_first_bg
-                    : R.drawable.action_sheet_bg);
-        } else if (row == (rowCount - 1)) {
-            rowView.setBackgroundResource(R.drawable.action_sheet_last_bg);
-        } else {
-            rowView.setBackgroundResource(R.drawable.action_sheet_bg);
+    }
+
+    /* 第一行是Divider View */
+    @Override
+    protected int getFirstRowBackgroundResource(int section, int row) {
+        return R.drawable.action_sheet_bg;
+    }
+
+    @Override
+    protected int getRowBackgroundResource(int section, int row) {
+        if (row % 2 == 1) {
+            return 0;
         }
-        return rowView;
+        return R.drawable.action_sheet_bg;
+    }
+
+    @Override
+    protected int getLastRowBackgroundResource(int section, int row) {
+        return R.drawable.action_sheet_last_bg;
+    }
+
+    @Override
+    protected int getSingleRowBackgroundResource(int section, int row) {
+        if (section == 1) {
+            return 0;
+        }
+        return R.drawable.action_sheet_single_bg;
     }
 
     @Override

@@ -12,19 +12,6 @@ public class PopupMenuAdapter extends ActionSheetAdapter {
         super(context, null, null, actions, icons, false);
     }
 
-//    @Override
-//    public View getRow(int section, int row) {
-//        View view = super.getRow(section, row);
-//        if (row == 0) {
-//            if (getRowCount(0) == 1) {
-//                view.setBackgroundResource(R.drawable.action_sheet_last_bg);
-//            } else {
-//                view.setBackgroundResource(R.drawable.action_sheet_bg);
-//            }
-//        }
-//        return view;
-//    }
-
     @Override
     public View getHeader() {
         return LayoutInflater.from(mContext).inflate(R.layout.item_menu_top_triangle, null);
