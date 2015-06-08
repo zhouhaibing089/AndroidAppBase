@@ -46,7 +46,7 @@ public class ActionSheetAdapter extends TableAdapter {
     }
 
     @Override
-    public View getRow(int section, int row) {
+    public View getRow(int section, int row, View convertView) {
         if (section == 1) {
             return getCancelView();
         }
@@ -54,7 +54,7 @@ public class ActionSheetAdapter extends TableAdapter {
         if (row % 2 == 1) {
             return getDividerView();
         }
-                /* ActionSheet的每一行Action */
+        /* ActionSheet的每一行Action */
         View rowView = getActionView(mActions[row / 2],
                 mIcons == null ? -1 : mIcons[row / 2]);
         int rowCount = getRowCount(section);
@@ -88,7 +88,7 @@ public class ActionSheetAdapter extends TableAdapter {
     }
 
     @Override
-    protected View getSectionTextView(String text) {
+    protected View getSectionHeaderView(int section, View convertView) {
         LinearLayout container = new LinearLayout(mContext);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) AppUtils.getPix(mContext, 8)));
