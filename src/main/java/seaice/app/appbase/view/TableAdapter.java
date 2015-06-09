@@ -38,34 +38,26 @@ public abstract class TableAdapter extends BaseAdapter {
         mContext = context;
     }
 
+    // 子类需要实现的方法
     public abstract int getRowCount(int section);
 
-    public abstract View getRow(int section, int row, View convertView);
+    public abstract View getRow(int section, int row, View convertView, ViewGroup parent);
 
-    public View getHeader() {
-        return null;
-    }
+    public abstract boolean hasHeader();
 
-    public View getFooter() {
-        return null;
-    }
+    public abstract View getHeader(ViewGroup parent);
+
+    public abstract boolean hasFooter();
+
+    public abstract View getFooter(ViewGroup parent);
 
     public abstract int getSectionCount();
 
-    public String getSectionHeader(int section) {
-        if (getSectionCount() >= 2) {
-            return "";
-        }
-        return null;
-    }
+    public abstract String getSectionHeader(int section);
 
-    public String getSectionFooter(int section) {
-        return null;
-    }
+    public abstract String getSectionFooter(int section);
 
-    public List<Object> getDataSet() {
-        return null;
-    }
+    public abstract List<Object> getDataSet();
 
     @Override
     public int getCount() {
@@ -102,10 +94,10 @@ public abstract class TableAdapter extends BaseAdapter {
     @Override
     public boolean isEnabled(int position) {
             /* Table的Header和Footer都是不可点的 */
-        if (mHasHeader == 1 && position == 0) {
+        if (hasHeader() && position == 0) {
             return false;
         }
-        if (mHasFooter == 1 && position == (mCount - 1)) {
+        if (hasFooter() && position == (mCount - 1)) {
             return false;
         }
             /* Section的Header和Footer都是不可点的 */
@@ -131,12 +123,12 @@ public abstract class TableAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         /* 如果是第一个 */
-        if (position == 0 && mHasHeader == 1) {
-            return getHeader();
+        if (hasHeader() && position == 0) {
+            return getHeader(parent);
         }
         /* 如果是最后一个 */
-        if (mHasFooter == 1 && position == (mCount - 1)) {
-            return getFooter();
+        if (hasFooter() && position == (mCount - 1)) {
+            return getFooter(parent);
         }
         for (int section : mRangeMap.keySet()) {
             Range range = mRangeMap.get(section);
@@ -146,15 +138,15 @@ public abstract class TableAdapter extends BaseAdapter {
             }
             /* 如果是当前Section的Header */
             if (position == range.start && range.hasHeader == 1) {
-                return getSectionHeaderView(section, convertView);
+                return getSectionHeaderView(section, convertView, parent);
             }
             /* 如果是当前Section的Footer */
             if (position == (range.end - 1) && range.hasFooter == 1) {
-                return getSectionFooterView(section, convertView);
+                return getSectionFooterView(section, convertView, parent);
             }
             /* 在当前Section行中 */
             int row = position - range.start - range.hasHeader;
-            View rowView = getRow(section, row, convertView);
+            View rowView = getRow(section, row, convertView, parent);
             // 设置背景
             int rowCount = getRowCount(section);
             int firstRowBg = getFirstRowBackgroundResource(section, row);
@@ -219,40 +211,34 @@ public abstract class TableAdapter extends BaseAdapter {
         return R.drawable.tabcell_last_bg;
     }
 
-    static final String SECTION_HEADER_TAG = "SECTION_HEADER";
-
     /* 关于设置Section的Header和Footer的View */
-    protected View getSectionHeaderView(int section, View convertView) {
+    protected View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
+        String text = getSectionHeader(section);
         if (convertView != null) {
-            ((TextView) convertView.findViewWithTag(SECTION_HEADER_TAG))
-                    .setText(getSectionHeader(section));
+            ((TextView) ((ViewGroup) convertView).getChildAt(0)).setText(text);
             return convertView;
         }
         LinearLayout container = new LinearLayout(mContext);
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setGravity(Gravity.CENTER_VERTICAL);
         TextView textView = new TextView(mContext);
-        textView.setText(getSectionHeader(section));
-        textView.setTag(SECTION_HEADER_TAG);
+        textView.setText(text);
         container.addView(textView, getSectionTextLayoutParams());
         return container;
     }
 
-    static final String SECTION_FOOTER_TAG = "SECTION_FOOTER";
-
     /* 设置Section的Footer的View */
-    protected View getSectionFooterView(int section, View convertView) {
+    protected View getSectionFooterView(int section, View convertView, ViewGroup parent) {
+        String text = getSectionFooter(section);
         if (convertView != null) {
-            ((TextView) convertView.findViewWithTag(SECTION_FOOTER_TAG))
-                    .setText(getSectionFooter(section));
+            ((TextView) ((ViewGroup) convertView).getChildAt(0)).setText(text);
             return convertView;
         }
         LinearLayout container = new LinearLayout(mContext);
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setGravity(Gravity.CENTER_VERTICAL);
         TextView textView = new TextView(mContext);
-        textView.setText(getSectionHeader(section));
-        textView.setTag(SECTION_FOOTER_TAG);
+        textView.setText(text);
         container.addView(textView, getSectionTextLayoutParams());
         return container;
     }
@@ -268,7 +254,7 @@ public abstract class TableAdapter extends BaseAdapter {
     public void notifyDataSetChanged() {
         mRangeMap = new HashMap<>();
         /* TableView的Header */
-        mHasHeader = getHeader() == null ? 0 : 1;
+        mHasHeader = hasHeader() ? 1 : 0;
         mCount = mHasHeader;
         for (int i = 0; i < getSectionCount(); ++i) {
             /* 每个Section中的header和footer */
@@ -286,7 +272,7 @@ public abstract class TableAdapter extends BaseAdapter {
             mRangeMap.put(i, range);
         }
         /* TableView的Footer */
-        mHasFooter = getFooter() == null ? 0 : 1;
+        mHasFooter = hasFooter() ? 1 : 0;
         mCount += mHasFooter;
 
         super.notifyDataSetChanged();
@@ -308,10 +294,10 @@ public abstract class TableAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
         /* Header和Footer都没必要重用 */
-        if (mHasHeader == 1 && position == 0) {
+        if (hasHeader() && position == 0) {
             return ITEM_VIEW_TYPE_HEADER_OR_FOOTER;
         }
-        if (mHasFooter == 1 && position == (mCount - 1)) {
+        if (hasFooter() && position == (mCount - 1)) {
             return ITEM_VIEW_TYPE_HEADER_OR_FOOTER;
         }
         for (int section : mRangeMap.keySet()) {

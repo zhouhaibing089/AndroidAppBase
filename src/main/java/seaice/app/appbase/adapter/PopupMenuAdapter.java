@@ -3,6 +3,7 @@ package seaice.app.appbase.adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import seaice.app.appbase.R;
 
@@ -13,7 +14,12 @@ public class PopupMenuAdapter extends ActionSheetAdapter {
     }
 
     @Override
-    public View getHeader() {
-        return LayoutInflater.from(mContext).inflate(R.layout.item_menu_top_triangle, null);
+    public boolean hasHeader() {
+        return true;
+    }
+
+    @Override
+    public View getHeader(ViewGroup parent) {
+        return LayoutInflater.from(mContext).inflate(R.layout.item_menu_top_triangle, parent, false);
     }
 }

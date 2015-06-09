@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import seaice.app.appbase.R;
 import seaice.app.appbase.utils.AppUtils;
-import seaice.app.appbase.view.TableAdapter;
 
-public class ActionSheetAdapter extends TableAdapter {
+public class ActionSheetAdapter extends BaseTableAdapter {
 
     String mTitle;
 
@@ -46,7 +45,7 @@ public class ActionSheetAdapter extends TableAdapter {
     }
 
     @Override
-    public View getRow(int section, int row, View convertView) {
+    public View getRow(int section, int row, View convertView, ViewGroup parent) {
         if (section == 1) {
             return getCancelView();
         }
@@ -56,7 +55,7 @@ public class ActionSheetAdapter extends TableAdapter {
         }
         /* ActionSheet的每一行Action */
         return getActionView(mActions[row / 2],
-                mIcons == null ? -1 : mIcons[row / 2]);
+                mIcons == null ? -1 : mIcons[row / 2], parent);
     }
 
     /* 第一行是Divider View */
@@ -100,7 +99,7 @@ public class ActionSheetAdapter extends TableAdapter {
     }
 
     @Override
-    protected View getSectionHeaderView(int section, View convertView) {
+    protected View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
         LinearLayout container = new LinearLayout(mContext);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 (int) AppUtils.getPix(mContext, 8)));
@@ -108,7 +107,12 @@ public class ActionSheetAdapter extends TableAdapter {
     }
 
     @Override
-    public View getHeader() {
+    public boolean hasHeader() {
+        return mTitle != null;
+    }
+
+    @Override
+    public View getHeader(ViewGroup parent) {
         if (mTitle == null) {
             return null;
         }
@@ -144,8 +148,18 @@ public class ActionSheetAdapter extends TableAdapter {
         return header;
     }
 
+    @Override
+    public boolean hasFooter() {
+        return false;
+    }
+
+    @Override
+    public View getFooter(ViewGroup parent) {
+        return null;
+    }
+
     /* 每一行的动作选项 */
-    private View getActionView(String action, int iconResId) {
+    private View getActionView(String action, int iconResId, ViewGroup parent) {
         /* 只有Action */
         if (iconResId == -1) {
             LinearLayout container = new LinearLayout(mContext);
@@ -163,7 +177,8 @@ public class ActionSheetAdapter extends TableAdapter {
             container.addView(textView, params);
             return container;
         }
-        View rootView = LayoutInflater.from(mContext).inflate(R.layout.item_menu_disclosure, null);
+        View rootView = LayoutInflater.from(mContext).inflate(R.layout.item_menu_disclosure,
+                parent, false);
         TextView textView = (TextView) rootView.findViewById(R.id.menuText);
         ImageView imageView = (ImageView) rootView.findViewById(R.id.menuIcon);
         textView.setText(action);
