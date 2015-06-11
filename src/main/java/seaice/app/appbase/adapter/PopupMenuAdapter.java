@@ -19,6 +19,11 @@ public class PopupMenuAdapter extends ActionSheetAdapter {
     }
 
     @Override
+    protected int getFirstRowBackgroundResource(int section, int row) {
+        return R.drawable.action_sheet_first_bg;
+    }
+
+    @Override
     public View getHeader(ViewGroup parent) {
         return LayoutInflater.from(mContext).inflate(R.layout.item_menu_top_triangle, parent, false);
     }
