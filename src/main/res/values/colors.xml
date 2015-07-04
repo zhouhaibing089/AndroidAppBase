@@ -8,4 +8,6 @@
     <color name="label_color">#454545</color>
     <color name="content_color">#787878</color>
     <color name="dark_label_color">#EFEFEF</color>
+    <color name="alert_btn">#FF007AFF</color>
+    <color name="alert_btn_pressed">#FF229CFF</color>
 </resources>

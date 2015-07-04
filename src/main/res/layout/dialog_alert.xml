@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
+    <TextView
+        android:id="@+id/app_base_alert_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/app_base_alert_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/app_base_alert_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D1D1D1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/app_base_alert_left_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:background="@null"
+            android:textColor="@color/alert_btn_text"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/single_line"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#D1D1D1"
+            android:orientation="horizontal" />
+
+        <Button
+            android:id="@+id/app_base_alert_right_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:background="@null"
+            android:textColor="@color/alert_btn_text"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
