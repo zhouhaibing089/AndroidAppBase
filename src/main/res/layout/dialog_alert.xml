@@ -13,9 +13,19 @@
         android:layout_marginBottom="4dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
+        android:textColor="@color/alert_title"
+        android:textSize="20sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/app_base_alert_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/alert_message" />
 
     <RelativeLayout
         android:id="@+id/app_base_alert_content"
@@ -28,20 +38,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp">
 
-        <TextView
-            android:id="@+id/app_base_alert_message"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-
     </RelativeLayout>
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#D1D1D1" />
+        android:background="@color/alert_divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,13 +57,13 @@
             android:layout_weight=".5"
             android:background="@null"
             android:textColor="@color/alert_btn_text"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/single_line"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#D1D1D1"
+            android:background="@color/alert_divider"
             android:orientation="horizontal" />
 
         <Button
@@ -71,7 +73,7 @@
             android:layout_weight=".5"
             android:background="@null"
             android:textColor="@color/alert_btn_text"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

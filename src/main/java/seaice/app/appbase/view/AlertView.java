@@ -2,6 +2,7 @@ package seaice.app.appbase.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,11 +56,11 @@ public class AlertView extends Dialog {
         /**
          * 左边按钮监听事件
          */
-        View.OnClickListener mLeftClickListener;
+        DialogInterface.OnClickListener mLeftClickListener;
         /**
          * 右边按钮监听事件
          */
-        View.OnClickListener mRightClickListener;
+        DialogInterface.OnClickListener mRightClickListener;
 
         public static Builder with(Context context) {
             return new Builder(context);
@@ -94,21 +95,21 @@ public class AlertView extends Dialog {
             return this;
         }
 
-        public Builder positive(int textResId, View.OnClickListener listener) {
+        public Builder positive(int textResId, DialogInterface.OnClickListener listener) {
             return positive(mContext.getString(textResId), listener);
         }
 
-        public Builder positive(String text, View.OnClickListener listener) {
+        public Builder positive(String text, DialogInterface.OnClickListener listener) {
             this.mRightButtonText = text;
             this.mRightClickListener = listener;
             return this;
         }
 
-        public Builder negative(int textResId, View.OnClickListener listener) {
+        public Builder negative(int textResId, DialogInterface.OnClickListener listener) {
             return negative(mContext.getString(textResId), listener);
         }
 
-        public Builder negative(String text, View.OnClickListener listener) {
+        public Builder negative(String text, DialogInterface.OnClickListener listener) {
             this.mLeftButtonText = text;
             this.mLeftClickListener = listener;
             return this;
@@ -121,7 +122,7 @@ public class AlertView extends Dialog {
          */
         public AlertView create() {
             final AlertView alertView = new AlertView(mContext, R.style.AlertView);
-            View rootView = LayoutInflater.from(mContext).inflate(R.layout.dialog_alert, null);
+            ViewGroup rootView = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.dialog_alert, null);
             alertView.addContentView(rootView, new LayoutParams(LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT));
             TextView titleView = (TextView) rootView.findViewById(R.id.app_base_alert_title);
@@ -133,12 +134,15 @@ public class AlertView extends Dialog {
             }
             if (mMessage != null) {
                 messageView.setText(mMessage);
+            } else {
+                rootView.removeView(messageView);
             }
             // 如果设置了ContentView, 就把MessageView取消掉
             if (mContentView != null) {
-                contentView.removeView(messageView);
                 contentView.addView(mContentView, new RelativeLayout.LayoutParams(
                         LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            } else {
+                contentView.setVisibility(View.GONE);
             }
             // 按钮设定
             Button leftButton = (Button) rootView.findViewById(R.id.app_base_alert_left_button);
@@ -147,13 +151,16 @@ public class AlertView extends Dialog {
             leftButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mLeftClickListener.onClick(v);
-                    alertView.dismiss();
+                    mLeftClickListener.onClick(alertView, 0);
                 }
             });
             rightButton.setText(mRightButtonText);
-            rightButton.setOnClickListener(mRightClickListener);
-
+            rightButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRightClickListener.onClick(alertView, 1);
+                }
+            });
             // 其他设定
             alertView.setCancelable(false);
             return alertView;
