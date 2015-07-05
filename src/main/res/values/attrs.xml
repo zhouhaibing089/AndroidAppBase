@@ -39,4 +39,12 @@
         <attr name="searchTextSize" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="SwitchView">
+        <attr name="switchBorderWidth" format="dimension" />
+        <attr name="switchOffBorderColor" format="reference|color" />
+        <attr name="switchOffColor" format="reference|color" />
+        <attr name="switchOnColor" format="reference|color" />
+        <attr name="switchSpotColor" format="reference|color" />
+        <attr name="switchAnimate" format="reference|boolean" />
+    </declare-styleable>
 </resources>

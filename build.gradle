@@ -35,4 +35,6 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     // SwipeBack功能
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    // 物理动画
+    compile 'com.facebook.rebound:rebound:0.3.8'
 }

@@ -3,6 +3,7 @@ package seaice.app.appbase;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 
 import butterknife.ButterKnife;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
@@ -89,5 +90,15 @@ public abstract class BaseActivity extends SwipeBackActivity {
             return true;
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+    /**
+     * 辅助方法, 取得一个View
+     *
+     * @param id View的ID
+     * @return View实例
+     */
+    protected View view(int id) {
+        return findViewById(id);
     }
 }
