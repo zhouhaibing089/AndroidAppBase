@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -101,7 +102,7 @@ public class ActionSheetAdapter extends BaseTableAdapter {
     @Override
     protected View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
         LinearLayout container = new LinearLayout(mContext);
-        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        container.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
                 (int) AppUtils.getPix(mContext, 8)));
         return container;
     }
@@ -118,9 +119,9 @@ public class ActionSheetAdapter extends BaseTableAdapter {
         }
 
         LinearLayout header = new LinearLayout(mContext);
-        header.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+        header.setLayoutParams(new AbsListView.LayoutParams(
+                AbsListView.LayoutParams.MATCH_PARENT,
+                AbsListView.LayoutParams.WRAP_CONTENT));
         header.setOrientation(LinearLayout.VERTICAL);
         header.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -163,8 +164,8 @@ public class ActionSheetAdapter extends BaseTableAdapter {
         /* 只有Action */
         if (iconResId == -1) {
             LinearLayout container = new LinearLayout(mContext);
-            container.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, (int) AppUtils.getPix(mContext, 48)));
+            container.setLayoutParams(new AbsListView.LayoutParams(
+                    AbsListView.LayoutParams.MATCH_PARENT, (int) AppUtils.getPix(mContext, 48)));
             container.setGravity(Gravity.CENTER);
             container.setOrientation(LinearLayout.VERTICAL);
             TextView textView = new TextView(mContext);
@@ -189,8 +190,8 @@ public class ActionSheetAdapter extends BaseTableAdapter {
 
     private View getCancelView() {
         LinearLayout container = new LinearLayout(mContext);
-        container.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, (int) AppUtils.getPix(mContext, 48)));
+        container.setLayoutParams(new AbsListView.LayoutParams(
+                AbsListView.LayoutParams.MATCH_PARENT, (int) AppUtils.getPix(mContext, 48)));
         container.setGravity(Gravity.CENTER);
         container.setOrientation(LinearLayout.VERTICAL);
         TextView cancelView = new TextView(mContext);
@@ -207,8 +208,8 @@ public class ActionSheetAdapter extends BaseTableAdapter {
 
     protected View getDividerView() {
         View divider = new View(mContext);
-        divider.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, (int) AppUtils.getPix(mContext, 1)));
+        divider.setLayoutParams(new AbsListView.LayoutParams(
+                AbsListView.LayoutParams.MATCH_PARENT, (int) AppUtils.getPix(mContext, 1)));
         divider.setBackgroundColor(mContext.getResources().getColor(R.color.actionSheetDivider));
         return divider;
     }
