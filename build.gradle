@@ -20,8 +20,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:22.2.0'
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:appcompat-v7:22.2.1'
     // 网络
     compile 'com.mcxiaoke.volley:library:1.0.11'
     // 控制反转
@@ -37,4 +37,6 @@ dependencies {
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
     // 物理动画
     compile 'com.facebook.rebound:rebound:0.3.8'
+    // Facebook提供的图片API
+    compile 'com.facebook.fresco:fresco:0.6.0+'
 }
