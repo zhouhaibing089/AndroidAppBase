@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import seaice.app.appbase.R;
 
@@ -16,7 +15,7 @@ import seaice.app.appbase.R;
  *
  * @author 周海兵
  */
-public class TableView extends ListView implements AdapterView.OnItemClickListener {
+public class TableView extends BounceListView implements AdapterView.OnItemClickListener {
 
     /* 监听器 */
     OnCellClickListener mListener;

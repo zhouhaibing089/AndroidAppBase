@@ -2,14 +2,15 @@ package seaice.app.appbase;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 
 import butterknife.ButterKnife;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import seaice.app.appbase.view.NavBarView;
 
-public abstract class BaseActivity extends SwipeBackActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected NavBarView mNavBarView;
 
@@ -18,9 +19,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
 
-        if (!needSwipeBack()) {
-            setSwipeBackEnable(false);
-        }
         if (hasNavBar()) {
             mNavBarView = (NavBarView) findViewById(R.id.app_base_nav_bar);
         }
@@ -62,16 +60,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
         return true;
     }
 
-    /* 是否需要ButterKnife做View Injection */
-    protected boolean needButterKnife() {
-        return true;
-    }
-
-    /* 是否支持SwipeBack */
-    protected boolean needSwipeBack() {
-        return true;
-    }
-
     /* 当按下返回键时 */
     public void onBackPressed() {
         if (mNavBarView != null && mNavBarView.isPopupShowing()) {
@@ -82,7 +70,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             if (mNavBarView != null) {
                 mNavBarView.triggerMenu();

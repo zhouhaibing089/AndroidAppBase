@@ -129,7 +129,7 @@ public class NavBarView extends RelativeLayout {
     }
 
     /* 辅助方法: 生成一个TextView */
-    private TextView getTextView(String text, boolean title) {
+    protected TextView getTextView(String text, boolean title) {
         TextView textView = new TextView(getContext());
         textView.setTextColor(mTitleColor);
         textView.setTextSize(title ? mTitleSize : mItemTextSize);
