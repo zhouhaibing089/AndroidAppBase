@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="app_base_nav_bar" type="id" />
+    <item name="app_base_nav_bar_left" type="id" />
+    <item name="app_base_nav_bar_center" type="id" />
+    <item name="app_base_nav_bar_right" type="id" />
+    <item name="app_base_tab_bar" type="id" />
+    <item name="app_base_tab_strip_0" type="id" />
+    <item name="app_base_tab_strip_1" type="id" />
+    <item name="app_base_tab_strip_2" type="id" />
+    <item name="app_base_tab_strip_3" type="id" />
+    <item name="app_base_tab_strip_4" type="id" />
+    <item name="app_base_tab_strip_5" type="id" />
+    <item name="app_base_tab_strip_6" type="id" />
+    <item name="app_base_tab_strip_7" type="id" />
+    <item name="app_base_tab_strip_8" type="id" />
+    <item name="app_base_tab_strip_9" type="id" />
 </resources>

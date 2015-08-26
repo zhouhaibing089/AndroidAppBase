@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -24,8 +24,9 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:22.2.1'
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:support-v4:23.0.0'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:percent:23.0.0'
     // 网络
     compile 'com.mcxiaoke.volley:library:1.0.11'
     // 控制反转
@@ -42,5 +43,7 @@ dependencies {
     // 物理动画
     compile 'com.facebook.rebound:rebound:0.3.8'
     // Facebook提供的图片API
-    compile 'com.facebook.fresco:fresco:0.6.0+'
+    // compile 'com.facebook.fresco:fresco:0.6.0+'
+    // Code Generation
+    compile 'org.projectlombok:lombok:1.16.4'
 }

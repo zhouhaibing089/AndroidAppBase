@@ -7,6 +7,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.HeaderViewListAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import seaice.app.appbase.R;
 
@@ -15,7 +18,7 @@ import seaice.app.appbase.R;
  *
  * @author 周海兵
  */
-public class TableView extends BounceListView implements AdapterView.OnItemClickListener {
+public class TableView extends ListView implements AdapterView.OnItemClickListener {
 
     /* 监听器 */
     OnCellClickListener mListener;
@@ -57,12 +60,21 @@ public class TableView extends BounceListView implements AdapterView.OnItemClick
         if (mListener == null) {
             return;
         }
-        TableAdapter adapter = (TableAdapter) getAdapter();
-        for (int section = 0; section < adapter.getSectionCount(); ++section) {
-            TableAdapter.Range range = adapter.mRangeMap.get(section);
-            if (position >= range.start && position < range.end) {
-                mListener.onCellClick(parent, view, section, position - range.start - range.hasHeader, id);
-                return;
+        ListAdapter adapter = getAdapter();
+        if (adapter instanceof HeaderViewListAdapter) {
+            adapter = ((HeaderViewListAdapter) adapter).getWrappedAdapter();
+            // subtract the header view position
+            position = position - 1;
+        }
+        if (adapter instanceof TableAdapter) {
+            TableAdapter tableAdapter = (TableAdapter) adapter;
+            for (int section = 0; section < tableAdapter.getSectionCount(); ++section) {
+                TableAdapter.Range range = tableAdapter.mRangeMap.get(section);
+                if (position >= range.start && position < range.end) {
+                    mListener.onCellClick(parent, view, section,
+                            position - range.start - range.hasHeader, id);
+                    return;
+                }
             }
         }
     }

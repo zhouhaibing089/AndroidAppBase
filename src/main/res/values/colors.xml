@@ -13,4 +13,6 @@
     <color name="alert_message">#454545</color>
     <color name="alert_btn">#FF007AFF</color>
     <color name="alert_btn_pressed">#FF229CFF</color>
+    <color name="swipe_back_shadow">#7f000000</color>
+    <color name="badge">#F95324</color>
 </resources>

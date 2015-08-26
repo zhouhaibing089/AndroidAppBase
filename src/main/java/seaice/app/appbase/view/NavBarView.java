@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,25 +29,26 @@ import seaice.app.appbase.utils.AppUtils;
 public class NavBarView extends RelativeLayout {
 
     private static final int DEFAULT_ITEM_BACKGROUND = R.drawable.navbar_item_bg;
-    private static final float DEFAULT_ITEM_TEXT_SIZE = 9f;
+    private static final float DEFAULT_ITEM_TEXT_SIZE = 18f;
     private static final int DEFAULT_LEFT_ICON = -1;
     private static final int DEFAULT_RIGHT_ICON = -1;
     private static final boolean DEFAULT_HAS_BACK_TITLE = true;
     private static final int DEFAULT_TITLE_COLOR = Color.parseColor("#FFFFFFFF");
-    private static final float DEFAULT_TITLE_SIZE = 10f;
+    private static final float DEFAULT_TITLE_SIZE = 20f;
     private static final float DEFAULT_ITEM_MARGIN = 8;
     /* 标题View */
-    View mCenterItem;
+    protected View mCenterItem;
     /* 标题 */
     String mTitle;
     /* BarItem的背景设置 */
     int mItemBackground;
     float mItemTextSize;
-    /* 左按钮 */ View mLeftItem;
+    /* 左按钮 */
+    protected View mLeftItem;
     int mLeftIcon;
     String mLeftText;
     /* 右按钮 */
-    View mRightItem;
+    protected View mRightItem;
     int mRightIcon;
     String mRightText;
     /* 是否有Back Title */
@@ -132,7 +134,7 @@ public class NavBarView extends RelativeLayout {
     protected TextView getTextView(String text, boolean title) {
         TextView textView = new TextView(getContext());
         textView.setTextColor(mTitleColor);
-        textView.setTextSize(title ? mTitleSize : mItemTextSize);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, title ? mTitleSize : mItemTextSize);
         textView.setText(text);
 
         return textView;
@@ -180,11 +182,12 @@ public class NavBarView extends RelativeLayout {
         container.setBackgroundResource(mItemBackground);
 
         ImageView backIcon = new ImageView(getContext());
-        backIcon.setImageResource(R.mipmap.ic_ab_back_holo_dark_am);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
+        backIcon.setImageResource(R.drawable.back);
+        backIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) AppUtils.getPix(getContext(), 14),
+                (int) AppUtils.getPix(getContext(), 24));
         // 左右Margin
-        params.setMargins((int) mItemMargin, 0, 0, 0);
+        params.setMargins((int) mItemMargin, 0, (int) mItemMargin / 2, 0);
         container.addView(backIcon, params);
 
         TextView textView = getTextView(backTitle, false);
@@ -207,6 +210,7 @@ public class NavBarView extends RelativeLayout {
     /* 直接使用View作为左部按钮 */
     public void setLeftItem(View view) {
         removeLeftItem();
+        view.setId(R.id.app_base_nav_bar_left);
         addView(view, getLeftLayoutParams());
         mLeftItem = view;
     }
@@ -227,6 +231,7 @@ public class NavBarView extends RelativeLayout {
 
     public void setCenterItem(View view) {
         removeCenterItem();
+        view.setId(R.id.app_base_nav_bar_center);
         addView(view, getCenterLayoutParams());
         mCenterItem = view;
     }
@@ -242,7 +247,7 @@ public class NavBarView extends RelativeLayout {
 
     /* 设置中间部分的View, 根据LayoutId */
     public void setCenterItem(int layoutId) {
-        setCenterItem(LayoutInflater.from(getContext()).inflate(layoutId, null));
+        setCenterItem(LayoutInflater.from(getContext()).inflate(layoutId, this));
     }
 
     /* 设置标题 */
@@ -290,6 +295,7 @@ public class NavBarView extends RelativeLayout {
     /* 设置右边按钮, 任意View */
     public void setRightItem(View view) {
         removeRightItem();
+        view.setId(R.id.app_base_nav_bar_right);
         addView(view, getRightLayoutParams());
         mRightItem = view;
     }

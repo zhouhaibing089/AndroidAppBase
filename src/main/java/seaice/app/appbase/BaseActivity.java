@@ -9,10 +9,13 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 import seaice.app.appbase.view.NavBarView;
+import seaice.app.appbase.view.TabBarView;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected NavBarView mNavBarView;
+
+    protected TabBarView mTabBarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResId());
 
         if (hasNavBar()) {
-            mNavBarView = (NavBarView) findViewById(R.id.app_base_nav_bar);
+            mNavBarView = (NavBarView) view(R.id.app_base_nav_bar);
+        }
+        if (hasTabBar()) {
+            mTabBarView = (TabBarView) view(R.id.app_base_tab_bar);
         }
         ButterKnife.inject(this);
         // Member的Injection
@@ -52,12 +58,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /* 子类可以重载此方法来让此Activity不做Dagger Injection */
     protected boolean needDagger() {
-        return true;
+        return false;
     }
 
     /* 是否有Navigation Bar */
     protected boolean hasNavBar() {
-        return true;
+        return false;
+    }
+
+    /* 页面是否有底部菜单 */
+    protected boolean hasTabBar() {
+        return false;
     }
 
     /* 当按下返回键时 */
