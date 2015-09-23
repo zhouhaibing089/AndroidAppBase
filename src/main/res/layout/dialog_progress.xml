@@ -13,8 +13,8 @@
 
     <ImageView
         android:id="@+id/app_base_progress_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="@anim/progress_spinner"
         android:contentDescription="@string/app_base_content_desc" />
 
@@ -23,6 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:minWidth="80dp"
         android:textColor="#FFFFFF" />
 
 </LinearLayout>

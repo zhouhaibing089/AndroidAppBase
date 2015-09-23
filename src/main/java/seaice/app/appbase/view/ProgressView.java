@@ -3,6 +3,7 @@ package seaice.app.appbase.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,7 +25,9 @@ public class ProgressView extends Dialog {
     public void onWindowFocusChanged(boolean hasFocus) {
         ImageView imageView = (ImageView) findViewById(R.id.app_base_progress_spinner);
         AnimationDrawable spinner = (AnimationDrawable) imageView.getBackground();
-        spinner.start();
+        if (spinner != null) {
+            spinner.start();
+        }
     }
 
     public void setMessage(CharSequence message) {
@@ -34,6 +37,26 @@ public class ProgressView extends Dialog {
             txt.setText(message);
             txt.invalidate();
         }
+    }
+
+    public void success(String text, final Runnable after) {
+        TextView textView = (TextView) findViewById(R.id.app_base_progress_text);
+        textView.setText(text);
+        ImageView imageView = ((ImageView) findViewById(R.id.app_base_progress_spinner));
+        imageView.setBackgroundDrawable(null);
+        imageView.setImageResource(R.drawable.progress_success);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismiss();
+                after.run();
+            }
+        }, 1200);
+    }
+
+    public void error(Runnable after) {
+
     }
 
     public static ProgressView show(Context context, CharSequence message, boolean cancelable,

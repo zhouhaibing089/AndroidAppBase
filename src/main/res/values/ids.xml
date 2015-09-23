@@ -15,4 +15,6 @@
     <item name="app_base_tab_strip_7" type="id" />
     <item name="app_base_tab_strip_8" type="id" />
     <item name="app_base_tab_strip_9" type="id" />
+    <item name="app_base_loading" type="id" />
+    <item name="app_base_nomore" type="id" />
 </resources>

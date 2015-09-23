@@ -10,7 +10,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import seaice.app.appbase.R;
 
 /**
@@ -20,151 +19,149 @@ import seaice.app.appbase.R;
  */
 public class AlertView extends Dialog {
 
-    public AlertView(Context context) {
-        super(context);
+  public AlertView(Context context) {
+    super(context);
+  }
+
+  public AlertView(Context context, int theme) {
+    super(context, theme);
+  }
+
+  public static class Builder {
+    /**
+     * Context对象
+     */
+    Context mContext;
+    /**
+     * AlertView的标题
+     */
+    String mTitle;
+    /**
+     * AlertView的消息
+     */
+    String mMessage;
+    /**
+     * AlertView的主体View
+     */
+    View mContentView;
+    /**
+     * 左按钮文字
+     */
+    String mLeftButtonText;
+    /**
+     * 右按钮文字
+     */
+    String mRightButtonText;
+    /**
+     * 左边按钮监听事件
+     */
+    DialogInterface.OnClickListener mLeftClickListener;
+    /**
+     * 右边按钮监听事件
+     */
+    DialogInterface.OnClickListener mRightClickListener;
+
+    public static Builder with(Context context) {
+      return new Builder(context);
     }
 
-    public AlertView(Context context, int theme) {
-        super(context, theme);
+    private Builder(Context context) {
+      this.mContext = context;
     }
 
-    public static class Builder {
-        /**
-         * Context对象
-         */
-        Context mContext;
-        /**
-         * AlertView的标题
-         */
-        String mTitle;
-        /**
-         * AlertView的消息
-         */
-        String mMessage;
-        /**
-         * AlertView的主体View
-         */
-        View mContentView;
-        /**
-         * 左按钮文字
-         */
-        String mLeftButtonText;
-        /**
-         * 右按钮文字
-         */
-        String mRightButtonText;
-        /**
-         * 左边按钮监听事件
-         */
-        DialogInterface.OnClickListener mLeftClickListener;
-        /**
-         * 右边按钮监听事件
-         */
-        DialogInterface.OnClickListener mRightClickListener;
-
-        public static Builder with(Context context) {
-            return new Builder(context);
-        }
-
-        private Builder(Context context) {
-            this.mContext = context;
-        }
-
-        public Builder title(String title) {
-            mTitle = title;
-            return this;
-        }
-
-        public Builder title(int titleResId) {
-            mTitle = mContext.getString(titleResId);
-            return this;
-        }
-
-        public Builder message(String message) {
-            mMessage = message;
-            return this;
-        }
-
-        public Builder message(int messageResId) {
-            mMessage = mContext.getString(messageResId);
-            return this;
-        }
-
-        public Builder content(View contentView) {
-            mContentView = contentView;
-            return this;
-        }
-
-        public Builder positive(int textResId, DialogInterface.OnClickListener listener) {
-            return positive(mContext.getString(textResId), listener);
-        }
-
-        public Builder positive(String text, DialogInterface.OnClickListener listener) {
-            this.mRightButtonText = text;
-            this.mRightClickListener = listener;
-            return this;
-        }
-
-        public Builder negative(int textResId, DialogInterface.OnClickListener listener) {
-            return negative(mContext.getString(textResId), listener);
-        }
-
-        public Builder negative(String text, DialogInterface.OnClickListener listener) {
-            this.mLeftButtonText = text;
-            this.mLeftClickListener = listener;
-            return this;
-        }
-
-        /**
-         * 创建AlertView实例
-         *
-         * @return AlertView
-         */
-        public AlertView create() {
-            final AlertView alertView = new AlertView(mContext, R.style.AlertView);
-            ViewGroup rootView = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.dialog_alert, null);
-            alertView.addContentView(rootView, new LayoutParams(LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT));
-            TextView titleView = (TextView) rootView.findViewById(R.id.app_base_alert_title);
-            ViewGroup contentView = (ViewGroup) rootView.findViewById(R.id.app_base_alert_content);
-            TextView messageView = (TextView) rootView.findViewById(R.id.app_base_alert_message);
-
-            if (mTitle != null) {
-                titleView.setText(mTitle);
-            }
-            if (mMessage != null) {
-                messageView.setText(mMessage);
-            } else {
-                rootView.removeView(messageView);
-            }
-            // 如果设置了ContentView, 就把MessageView取消掉
-            if (mContentView != null) {
-                contentView.addView(mContentView, new RelativeLayout.LayoutParams(
-                        LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            } else {
-                contentView.setVisibility(View.GONE);
-            }
-            // 按钮设定
-            Button leftButton = (Button) rootView.findViewById(R.id.app_base_alert_left_button);
-            Button rightButton = (Button) rootView.findViewById(R.id.app_base_alert_right_button);
-            leftButton.setText(mLeftButtonText);
-            leftButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mLeftClickListener.onClick(alertView, 0);
-                }
-            });
-            rightButton.setText(mRightButtonText);
-            rightButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mRightClickListener.onClick(alertView, 1);
-                }
-            });
-            // 其他设定
-            alertView.setCancelable(false);
-            return alertView;
-        }
-
+    public Builder title(String title) {
+      mTitle = title;
+      return this;
     }
+
+    public Builder title(int titleResId) {
+      mTitle = mContext.getString(titleResId);
+      return this;
+    }
+
+    public Builder message(String message) {
+      mMessage = message;
+      return this;
+    }
+
+    public Builder message(int messageResId) {
+      mMessage = mContext.getString(messageResId);
+      return this;
+    }
+
+    public Builder content(View contentView) {
+      mContentView = contentView;
+      return this;
+    }
+
+    public Builder positive(int textResId, DialogInterface.OnClickListener listener) {
+      return positive(mContext.getString(textResId), listener);
+    }
+
+    public Builder positive(String text, DialogInterface.OnClickListener listener) {
+      this.mRightButtonText = text;
+      this.mRightClickListener = listener;
+      return this;
+    }
+
+    public Builder negative(int textResId, DialogInterface.OnClickListener listener) {
+      return negative(mContext.getString(textResId), listener);
+    }
+
+    public Builder negative(String text, DialogInterface.OnClickListener listener) {
+      this.mLeftButtonText = text;
+      this.mLeftClickListener = listener;
+      return this;
+    }
+
+    /**
+     * 创建AlertView实例
+     *
+     * @return AlertView
+     */
+    public AlertView create() {
+      final AlertView alertView = new AlertView(mContext, R.style.AlertView);
+      ViewGroup rootView =
+          (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.dialog_alert, null);
+      alertView.addContentView(rootView,
+          new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+      TextView titleView = (TextView) rootView.findViewById(R.id.app_base_alert_title);
+      ViewGroup contentView = (ViewGroup) rootView.findViewById(R.id.app_base_alert_content);
+      TextView messageView = (TextView) rootView.findViewById(R.id.app_base_alert_message);
+
+      if (mTitle != null) {
+        titleView.setText(mTitle);
+      }
+      if (mMessage != null) {
+        messageView.setText(mMessage);
+      } else {
+        rootView.removeView(messageView);
+      }
+      // 如果设置了ContentView, 就把MessageView取消掉
+      if (mContentView != null) {
+        contentView.addView(mContentView,
+            new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+      } else {
+        contentView.setVisibility(View.INVISIBLE);
+      }
+      // 按钮设定
+      Button leftButton = (Button) rootView.findViewById(R.id.app_base_alert_left_button);
+      Button rightButton = (Button) rootView.findViewById(R.id.app_base_alert_right_button);
+      leftButton.setText(mLeftButtonText);
+      leftButton.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          mLeftClickListener.onClick(alertView, 0);
+        }
+      });
+      rightButton.setText(mRightButtonText);
+      rightButton.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          mRightClickListener.onClick(alertView, 1);
+        }
+      });
+      // 其他设定
+      alertView.setCancelable(false);
+      return alertView;
+    }
+  }
 }

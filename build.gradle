@@ -1,49 +1,45 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23"
+  compileSdkVersion 23
+  buildToolsVersion "23"
 
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:23.0.0'
-    compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.android.support:percent:23.0.0'
-    // 网络
-    compile 'com.mcxiaoke.volley:library:1.0.11'
-    // 控制反转
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
-    // View的注入
-    compile 'com.jakewharton:butterknife:6.1.0'
-    // 网络
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    // SwipeBack功能
-    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
-    // 物理动画
-    compile 'com.facebook.rebound:rebound:0.3.8'
-    // Facebook提供的图片API
-    // compile 'com.facebook.fresco:fresco:0.6.0+'
-    // Code Generation
-    compile 'org.projectlombok:lombok:1.16.4'
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile 'com.android.support:support-v4:23.0.0'
+  compile 'com.android.support:appcompat-v7:23.0.0'
+  compile 'com.android.support:percent:23.0.0'
+  // 网络
+  compile 'com.mcxiaoke.volley:library:1.0.11'
+  // 控制反转
+  compile 'com.squareup.dagger:dagger:1.2.2'
+  provided 'com.squareup.dagger:dagger-compiler:1.2.2'
+  // View的注入
+  compile 'com.jakewharton:butterknife:6.1.0'
+  // 网络
+  compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+  compile 'com.squareup.okhttp:okhttp:2.0.0'
+  compile 'com.squareup.retrofit:retrofit:1.9.0'
+  // 物理动画
+  compile 'com.facebook.rebound:rebound:0.3.8'
+  // Code Generation
+  compile 'org.projectlombok:lombok:1.16.4'
 }
